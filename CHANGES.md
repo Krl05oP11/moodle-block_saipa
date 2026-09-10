@@ -2,6 +2,13 @@
 
 All notable changes to the SAIPA Assistant block are documented in this file.
 
+## [Unreleased]
+
+### Changed
+- Declares its dependency on `local_saipa` in `version.php`
+  (`$plugin->dependencies`), so installing the block pulls `local_saipa` in.
+  Previously the dependency was (incorrectly) declared on `local_saipa`'s side.
+
 ## [0.5.0] - 2026-03-24
 
 ### Added
