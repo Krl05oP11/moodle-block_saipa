@@ -35,10 +35,16 @@ All notable changes to the SAIPA Assistant block are documented in this file.
   previously been an unminified copy of the source, unlike the plugin's other
   three build files).
 
-### Documentation
-- **No PHPUnit test coverage.** Unlike `local_saipa` (73 tests) and
-  `local_evalia` (23 tests), `block_saipa` has no `tests/` directory at all.
-  Flagged here rather than silently left; adding coverage is a separate task.
+### Added
+- **PHPUnit test coverage — was the only one of the 3 Marketplace-bound
+  plugins with none.** 12 tests: block metadata (title from lang string,
+  single-instance, course-view-only format) and `get_content()`'s branching
+  — the `local/saipa:chat` capability gate, the per-course
+  `saipa_enabled = 0` flag, Telegram/WhatsApp channel derivation
+  (none/telegram/whatsapp/both) from `messaging_channel`, link/verification
+  state, the WhatsApp phone masked to its last 4 digits in the rendered
+  markup, and the content-caching short-circuit on a second call. Verified
+  against a live Moodle + Postgres stack: all 12 green.
 
 ## [0.5.0] - 2026-03-24
 
