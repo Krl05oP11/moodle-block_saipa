@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 /**
  * Spanish language strings for block_saipa.
  *
@@ -7,16 +22,19 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname']             = 'Asistente SAIPA';
-$string['saipa:addinstance']      = 'Agregar un nuevo bloque Asistente SAIPA';
-$string['saipa:myaddinstance']    = 'Agregar un nuevo bloque Asistente SAIPA a Mi inicio';
-$string['requires_local']         = 'El bloque Asistente SAIPA requiere que local_saipa esté instalado.';
+$string['chat_connect_error']     = 'Error al conectar con SAIPA. Por favor intentá de nuevo.';
+$string['chat_feedback_not_useful'] = 'No útil';
+$string['chat_feedback_useful']  = 'Útil';
+$string['chat_loading']           = 'Pensando...';
 $string['chat_placeholder']       = 'Preguntá cualquier cosa sobre este curso...';
 $string['chat_send']              = 'Enviar';
 $string['chat_title']             = 'Asistente SAIPA';
-$string['chat_loading']           = 'Pensando...';
 $string['index_button']           = 'Indexar curso';
+$string['pluginname']             = 'Asistente SAIPA';
 $string['privacy:no_data_reason'] = 'El bloque SAIPA no almacena datos personales por sí mismo. Los datos son administrados por local_saipa.';
+$string['requires_local']         = 'El bloque Asistente SAIPA requiere que local_saipa esté instalado.';
+$string['saipa:addinstance']      = 'Agregar un nuevo bloque Asistente SAIPA';
+$string['saipa:myaddinstance']    = 'Agregar un nuevo bloque Asistente SAIPA a Mi inicio';
 $string['teacher_dashboard_link']  = 'Panel de alumnos';
 
 // Panel de Telegram

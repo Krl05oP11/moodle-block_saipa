@@ -5,6 +5,14 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Main class for block_saipa.
@@ -16,16 +24,35 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Course-view block that renders the SAIPA chat widget.
+ *
+ * @package    block_saipa
+ * @copyright  2026 Schaller & Ponce <dev@schaller-ponce.com.ar>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_saipa extends block_base {
-
+    /**
+     * Sets the block title.
+     */
     public function init(): void {
         $this->title = get_string('pluginname', 'block_saipa');
     }
 
+    /**
+     * Only one instance of this block is allowed per page.
+     *
+     * @return bool
+     */
     public function instance_allow_multiple(): bool {
         return false;
     }
 
+    /**
+     * Declares the page formats this block can appear on.
+     *
+     * @return array
+     */
     public function applicable_formats(): array {
         return [
             'course-view' => true,
@@ -34,6 +61,11 @@ class block_saipa extends block_base {
         ];
     }
 
+    /**
+     * Builds the block content: the SAIPA chat widget for the current course.
+     *
+     * @return \stdClass|null
+     */
     public function get_content(): ?\stdClass {
         global $USER, $COURSE, $OUTPUT;
 
@@ -60,54 +92,54 @@ class block_saipa extends block_base {
         global $DB;
 
         // Check per-course feature flag — if SAIPA is disabled for this course, hide the block.
-        $course_settings = $DB->get_record('saipa_course_settings', ['courseid' => (int) $COURSE->id]);
-        if ($course_settings && !(bool) $course_settings->saipa_enabled) {
+        $coursesettings = $DB->get_record('saipa_course_settings', ['courseid' => (int) $COURSE->id]);
+        if ($coursesettings && !(bool) $coursesettings->saipa_enabled) {
             $this->content->text = '';
             return $this->content;
         }
-        $channel           = get_config('local_saipa', 'messaging_channel') ?: 'none';
-        $telegram_enabled  = in_array($channel, ['telegram', 'both'], true);
-        $whatsapp_enabled  = in_array($channel, ['whatsapp', 'both'], true);
+        $channel         = get_config('local_saipa', 'messaging_channel') ?: 'none';
+        $telegramenabled = in_array($channel, ['telegram', 'both'], true);
+        $whatsappenabled = in_array($channel, ['whatsapp', 'both'], true);
 
         // Resolve Telegram link state.
-        $telegram_linked   = false;
-        $telegram_username = '';
-        if ($telegram_enabled) {
+        $telegramlinked   = false;
+        $telegramusername = '';
+        if ($telegramenabled) {
             $tg = $DB->get_record('saipa_telegram_links', ['userid' => (int) $USER->id, 'confirmed' => 1]);
             if ($tg) {
-                $telegram_linked   = true;
-                $telegram_username = (string) ($tg->telegram_username ?? '');
+                $telegramlinked   = true;
+                $telegramusername = (string) ($tg->telegram_username ?? '');
             }
         }
 
         // Resolve WhatsApp verification state.
-        $whatsapp_verified = false;
-        $whatsapp_phone    = '';
-        if ($whatsapp_enabled) {
+        $whatsappverified = false;
+        $whatsappphone    = '';
+        if ($whatsappenabled) {
             $wa = $DB->get_record('saipa_phone_verify', ['userid' => (int) $USER->id, 'verified' => 1]);
             if ($wa) {
-                $whatsapp_verified = true;
-                $whatsapp_phone    = '****' . substr((string) $wa->phone, -4);
+                $whatsappverified = true;
+                $whatsappphone    = '****' . substr((string) $wa->phone, -4);
             }
         }
 
-        $template_data = [
+        $templatedata = [
             'courseid'          => $COURSE->id,
             'userid'            => $USER->id,
             'username'          => fullname($USER),
             'wwwroot'           => (new \moodle_url('/'))->out(false),
             'is_teacher'        => has_capability('local/saipa:view', $context),
-            'telegram_enabled'  => $telegram_enabled,
-            'telegram_linked'   => $telegram_linked,
-            'telegram_username' => $telegram_username,
-            'whatsapp_enabled'  => $whatsapp_enabled,
-            'whatsapp_verified' => $whatsapp_verified,
-            'whatsapp_phone'    => $whatsapp_phone,
+            'telegram_enabled'  => $telegramenabled,
+            'telegram_linked'   => $telegramlinked,
+            'telegram_username' => $telegramusername,
+            'whatsapp_enabled'  => $whatsappenabled,
+            'whatsapp_verified' => $whatsappverified,
+            'whatsapp_phone'    => $whatsappphone,
         ];
 
         $this->content->text = $OUTPUT->render_from_template(
             'block_saipa/chat_widget',
-            $template_data
+            $templatedata
         );
 
         return $this->content;

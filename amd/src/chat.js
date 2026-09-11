@@ -8,7 +8,7 @@
  * @copyright 2026 Schaller & Ponce <dev@schaller-ponce.com.ar>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['core/ajax', 'core/log'], function(Ajax, Log) {
+define(['core/ajax', 'core/log', 'core/str'], function(Ajax, Log, Str) {
 
     'use strict';
 
@@ -28,9 +28,20 @@ define(['core/ajax', 'core/log'], function(Ajax, Log) {
             var fb = document.createElement('div');
             fb.style.fontSize = '0.75em';
             fb.style.marginBottom = '4px';
-            fb.innerHTML = '<button class="btn btn-link btn-sm p-0 saipa-fb-up" title="Útil">&#128077;</button>' +
-                           '<button class="btn btn-link btn-sm p-0 saipa-fb-down" title="No útil">&#128078;</button>';
+            fb.innerHTML = '<button class="btn btn-link btn-sm p-0 saipa-fb-up">&#128077;</button>' +
+                           '<button class="btn btn-link btn-sm p-0 saipa-fb-down">&#128078;</button>';
             container.appendChild(fb);
+
+            Str.get_strings([
+                {key: 'chat_feedback_useful', component: 'block_saipa'},
+                {key: 'chat_feedback_not_useful', component: 'block_saipa'},
+            ]).then(function(strings) {
+                fb.querySelector('.saipa-fb-up').title   = strings[0];
+                fb.querySelector('.saipa-fb-down').title = strings[1];
+                return strings;
+            }).catch(function(err) {
+                Log.error('SAIPA feedback strings error: ' + JSON.stringify(err));
+            });
 
             function sendFeedback(rating, upBtn, downBtn) {
                 upBtn.disabled   = true;
@@ -56,6 +67,13 @@ define(['core/ajax', 'core/log'], function(Ajax, Log) {
 
         container.scrollTop = container.scrollHeight;
     }
+
+    // Cached fallback message shown when the chat request fails; resolved once at module load.
+    var connectErrorMsg = 'Error connecting to SAIPA. Please try again.';
+    Str.get_string('chat_connect_error', 'block_saipa').then(function(msg) {
+        connectErrorMsg = msg;
+        return msg;
+    }).catch(function() {});
 
     function init(courseId) {
         var sendBtn      = document.getElementById('saipa-send-' + courseId);
@@ -134,7 +152,7 @@ define(['core/ajax', 'core/log'], function(Ajax, Log) {
                 var typing = document.getElementById('saipa-typing-' + courseId);
                 if (typing) { typing.remove(); }
                 Log.error('SAIPA chat error: ' + JSON.stringify(err));
-                appendMessage('assistant', 'Error al conectar con SAIPA. Por favor intentá de nuevo.', msgContainer, 0, courseId);
+                appendMessage('assistant', connectErrorMsg, msgContainer, 0, courseId);
 
             }).always(function() {
                 inputEl.disabled = false;
