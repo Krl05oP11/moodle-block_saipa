@@ -5,6 +5,13 @@ All notable changes to the SAIPA Assistant block are documented in this file.
 ## [Unreleased]
 
 ### Changed
+- **`pt_br` i18n completed — was 60% missing (14 of 35 keys).** The entire
+  Telegram panel (8 keys) and WhatsApp panel (13 keys) were silently falling
+  back to English. Verified: `php -l`; a programmatic diff shows 0 key
+  mismatches and 0 `{$a}` placeholder mismatches across `en`/`es`/`pt_br`; and
+  a live check against the real Moodle install confirms all 35 keys resolve
+  via `get_string_manager()` in all 3 languages — see
+  `docs/PLAN_MARKETPLACE_20260910.md` Bloque C.
 - Declares its dependency on `local_saipa` in `version.php`
   (`$plugin->dependencies`), so installing the block pulls `local_saipa` in.
   Previously the dependency was (incorrectly) declared on `local_saipa`'s side.
