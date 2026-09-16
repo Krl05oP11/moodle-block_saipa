@@ -135,7 +135,7 @@ final class block_saipa_test extends \advanced_testcase {
         global $DB;
         [$block, $course, $user] = $this->create_block_with_course();
 
-        $DB->insert_record('saipa_course_settings', (object) [
+        $DB->insert_record('local_saipa_course_settings', (object) [
             'courseid'       => $course->id,
             'saipa_enabled'  => 0,
             'chat_enabled'   => 1,
@@ -188,7 +188,7 @@ final class block_saipa_test extends \advanced_testcase {
         [$block, $course, $user] = $this->create_block_with_course();
         set_config('messaging_channel', 'telegram', 'local_saipa');
 
-        $DB->insert_record('saipa_telegram_links', (object) [
+        $DB->insert_record('local_saipa_telegram_links', (object) [
             'userid'            => $user->id,
             'telegram_id'       => 123456789,
             'telegram_username' => 'testuser',
@@ -226,7 +226,7 @@ final class block_saipa_test extends \advanced_testcase {
         [$block, $course, $user] = $this->create_block_with_course();
         set_config('messaging_channel', 'whatsapp', 'local_saipa');
 
-        $DB->insert_record('saipa_phone_verify', (object) [
+        $DB->insert_record('local_saipa_phone_verify', (object) [
             'userid'      => $user->id,
             'phone'       => '+5493511234567',
             'otp'         => '000000',
@@ -249,7 +249,7 @@ final class block_saipa_test extends \advanced_testcase {
         [$block, $course, $user] = $this->create_block_with_course();
         set_config('messaging_channel', 'both', 'local_saipa');
 
-        $DB->insert_record('saipa_telegram_links', (object) [
+        $DB->insert_record('local_saipa_telegram_links', (object) [
             'userid'            => $user->id,
             'telegram_id'       => 1,
             'telegram_username' => 'bothuser',
@@ -259,7 +259,7 @@ final class block_saipa_test extends \advanced_testcase {
             'timecreated'       => time(),
             'timemodified'      => time(),
         ]);
-        $DB->insert_record('saipa_phone_verify', (object) [
+        $DB->insert_record('local_saipa_phone_verify', (object) [
             'userid'      => $user->id,
             'phone'       => '+5493511230000',
             'otp'         => '000000',

@@ -92,7 +92,7 @@ class block_saipa extends block_base {
         global $DB;
 
         // Check per-course feature flag — if SAIPA is disabled for this course, hide the block.
-        $coursesettings = $DB->get_record('saipa_course_settings', ['courseid' => (int) $COURSE->id]);
+        $coursesettings = $DB->get_record('local_saipa_course_settings', ['courseid' => (int) $COURSE->id]);
         if ($coursesettings && !(bool) $coursesettings->saipa_enabled) {
             $this->content->text = '';
             return $this->content;
@@ -105,7 +105,7 @@ class block_saipa extends block_base {
         $telegramlinked   = false;
         $telegramusername = '';
         if ($telegramenabled) {
-            $tg = $DB->get_record('saipa_telegram_links', ['userid' => (int) $USER->id, 'confirmed' => 1]);
+            $tg = $DB->get_record('local_saipa_telegram_links', ['userid' => (int) $USER->id, 'confirmed' => 1]);
             if ($tg) {
                 $telegramlinked   = true;
                 $telegramusername = (string) ($tg->telegram_username ?? '');
@@ -116,7 +116,7 @@ class block_saipa extends block_base {
         $whatsappverified = false;
         $whatsappphone    = '';
         if ($whatsappenabled) {
-            $wa = $DB->get_record('saipa_phone_verify', ['userid' => (int) $USER->id, 'verified' => 1]);
+            $wa = $DB->get_record('local_saipa_phone_verify', ['userid' => (int) $USER->id, 'verified' => 1]);
             if ($wa) {
                 $whatsappverified = true;
                 $whatsappphone    = '****' . substr((string) $wa->phone, -4);
