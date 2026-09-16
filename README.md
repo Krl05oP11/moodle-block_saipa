@@ -22,6 +22,14 @@ course, and hides itself when SAIPA is disabled for that course
 | Telegram panel (link / unlink / status) | `local_saipa` messaging channel is `telegram` or `both` |
 | WhatsApp panel (verify number / unlink) | `local_saipa` messaging channel is `whatsapp` or `both` |
 
+> ⚠️ **WhatsApp is not functional yet.** The panel renders and its
+> verify/unlink actions call real `local_saipa` web services, but
+> `saipa-engine` has no route mounted for the WhatsApp webhook (see
+> `saipa-engine`'s `docker-compose.prod.yml`, "NOT FUNCTIONAL YET (E9)").
+> Don't set `messaging_channel` to `whatsapp`/`both` expecting delivery —
+> an admin who does gets a panel that accepts input and silently goes
+> nowhere. Telegram is the only working channel today.
+
 All AI calls, RAG, risk data and channel bookkeeping live in `local_saipa` and the
 separate `saipa-engine` service. This plugin stores **no** data of its own.
 
