@@ -31,7 +31,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_saipa\tests;
+namespace block_saipa;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -74,7 +74,7 @@ final class block_saipa_test extends \advanced_testcase {
         return [$block, $course, $user];
     }
 
-    // ── Block metadata ──────────────────────────────────────────────────────
+    // Block metadata.
 
     /**
      * The title comes from the lang string, not hardcoded.
@@ -104,7 +104,7 @@ final class block_saipa_test extends \advanced_testcase {
         $this->assertFalse($formats['my']);
     }
 
-    // ── get_content(): capability gate ──────────────────────────────────────
+    // get_content(): capability gate.
 
     /**
      * A user without local/saipa:chat sees no widget (empty content, no fatal).
@@ -125,7 +125,7 @@ final class block_saipa_test extends \advanced_testcase {
         $this->assertFalse(isset($content->text) && $content->text !== '');
     }
 
-    // ── get_content(): per-course disable flag ────────────────────────────
+    // get_content(): per-course disable flag.
 
     /**
      * saipa_course_settings.saipa_enabled = 0 hides the block for that course,
@@ -163,7 +163,7 @@ final class block_saipa_test extends \advanced_testcase {
         $this->assertStringContainsString((string) $course->id, $content->text);
     }
 
-    // ── get_content(): Telegram / WhatsApp channel derivation ────────────
+    // get_content(): Telegram / WhatsApp channel derivation.
 
     /**
      * messaging_channel = 'none' (or unset): neither channel is offered.

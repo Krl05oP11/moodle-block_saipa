@@ -36,28 +36,24 @@ $string['requires_local']         = 'O bloco Assistente SAIPA requer que local_s
 $string['saipa:addinstance']      = 'Adicionar um novo bloco Assistente SAIPA';
 $string['saipa:myaddinstance']    = 'Adicionar um novo bloco Assistente SAIPA à Minha área';
 $string['teacher_dashboard_link'] = 'Painel de alunos';
-
-// Painel do Telegram
-$string['telegram_panel_title']   = 'Telegram';
-$string['telegram_link_desc']     = 'Vincule sua conta do Telegram para conversar com o SAIPA a partir do app.';
-$string['telegram_link_button']   = 'Vincular meu Telegram';
-$string['telegram_linked_as']     = 'Conectado como @{$a}';
-$string['telegram_unlink_button'] = 'Desvincular';
-$string['telegram_open']          = 'Abrir no Telegram';
-$string['telegram_polling']       = 'Aguardando confirmação...';
 $string['telegram_error']         = 'Não foi possível gerar o link. Tente novamente.';
-
-// Painel do WhatsApp
-$string['whatsapp_panel_title']        = 'WhatsApp';
+$string['telegram_link_button']   = 'Vincular meu Telegram';
+$string['telegram_link_desc']     = 'Vincule sua conta do Telegram para conversar com o SAIPA a partir do app.';
+$string['telegram_linked_as']     = 'Conectado como @{$a}';
+$string['telegram_open']          = 'Abrir no Telegram';
+$string['telegram_panel_title']   = 'Telegram';
+$string['telegram_polling']       = 'Aguardando confirmação...';
+$string['telegram_unlink_button'] = 'Desvincular';
+$string['whatsapp_confirm_button']     = 'Verificar';
 $string['whatsapp_link_desc']          = 'Vincule seu número de WhatsApp para receber mensagens do SAIPA.';
+$string['whatsapp_otp_expired']        = 'O código expirou. Solicite um novo.';
+$string['whatsapp_otp_invalid']        = 'Código incorreto. Verifique e tente novamente.';
+$string['whatsapp_otp_label']          = 'Código de verificação recebido pelo WhatsApp';
+$string['whatsapp_otp_sent']           = 'Código enviado. Confira seu WhatsApp e digite-o aqui.';
+$string['whatsapp_panel_title']        = 'WhatsApp';
 $string['whatsapp_phone_label']        = 'Seu número de WhatsApp (com código do país, sem +)';
 $string['whatsapp_phone_placeholder']  = 'Ex: 5491112345678';
-$string['whatsapp_send_otp_button']    = 'Enviar código';
-$string['whatsapp_otp_label']          = 'Código de verificação recebido pelo WhatsApp';
-$string['whatsapp_confirm_button']     = 'Verificar';
-$string['whatsapp_verified_as']        = 'Número verificado: {$a}';
-$string['whatsapp_unlink_button']      = 'Desvincular';
-$string['whatsapp_otp_sent']           = 'Código enviado. Confira seu WhatsApp e digite-o aqui.';
-$string['whatsapp_otp_invalid']        = 'Código incorreto. Verifique e tente novamente.';
-$string['whatsapp_otp_expired']        = 'O código expirou. Solicite um novo.';
 $string['whatsapp_send_error']         = 'Não foi possível enviar o código. Verifique seu número e tente novamente.';
+$string['whatsapp_send_otp_button']    = 'Enviar código';
+$string['whatsapp_unlink_button']      = 'Desvincular';
+$string['whatsapp_verified_as']        = 'Número verificado: {$a}';

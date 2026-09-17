@@ -29,7 +29,7 @@ $plugin->version    = 2026032401;
 $plugin->requires   = 2024042200;
 $plugin->maturity   = MATURITY_BETA;
 $plugin->release    = '0.5.0';
-// block_saipa is a front-end for local_saipa: it calls its web services and
+// This block is a front-end for local_saipa: it calls its web services and
 // reads its per-course settings. Installing the block pulls local_saipa in.
 $plugin->dependencies = [
     'local_saipa' => 2026041902,

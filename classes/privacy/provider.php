@@ -27,8 +27,6 @@ namespace block_saipa\privacy;
 
 use core_privacy\local\metadata\null_provider;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Null privacy provider: block_saipa stores no personal data of its own.
  *
