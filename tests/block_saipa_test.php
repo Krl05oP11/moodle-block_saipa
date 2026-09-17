@@ -104,7 +104,7 @@ final class block_saipa_test extends \advanced_testcase {
         $this->assertFalse($formats['my']);
     }
 
-    // get_content(): capability gate.
+    // Capability gate for get_content().
 
     /**
      * A user without local/saipa:chat sees no widget (empty content, no fatal).
@@ -125,7 +125,7 @@ final class block_saipa_test extends \advanced_testcase {
         $this->assertFalse(isset($content->text) && $content->text !== '');
     }
 
-    // get_content(): per-course disable flag.
+    // Per-course disable flag for get_content().
 
     /**
      * saipa_course_settings.saipa_enabled = 0 hides the block for that course,
@@ -163,7 +163,7 @@ final class block_saipa_test extends \advanced_testcase {
         $this->assertStringContainsString((string) $course->id, $content->text);
     }
 
-    // get_content(): Telegram / WhatsApp channel derivation.
+    // Telegram / WhatsApp channel derivation for get_content().
 
     /**
      * messaging_channel = 'none' (or unset): neither channel is offered.
