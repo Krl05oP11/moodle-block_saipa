@@ -4,6 +4,11 @@ All notable changes to the SAIPA Assistant block are documented in this file.
 
 ## [Unreleased]
 
+### Changed
+- **The "Index course" button status texts come from the language packs**
+  (they were hardcoded Spanish). 3 new keys in `en`/`es`/`pt_br`.
+- `version.php` declares `$plugin->supported = [404, 405]`.
+
 ### Fixed
 - **JavaScript now passes Moodle's ESLint and `amd/build` is a real grunt
   build.** The CI ran `moodle-plugin-ci grunt` with `|| true`, which hid 11
