@@ -14,21 +14,26 @@
  */
 define(['core/ajax', 'core/log'], function(Ajax, Log) {
 
+    /**
+     * Wire up the teacher's "Index course" button to request RAG indexing of the course and show the result.
+     *
+     * @param {number} courseId Course id to index.
+     */
     function init(courseId) {
-        var btn    = document.getElementById('saipa-index-btn-' + courseId);
+        var btn = document.getElementById('saipa-index-btn-' + courseId);
         var status = document.getElementById('saipa-index-status-' + courseId);
         if (!btn || !status) {
             return;
         }
 
         btn.addEventListener('click', function() {
-            btn.disabled    = true;
+            btn.disabled = true;
             btn.textContent = '...';
             status.textContent = 'Indexando...';
 
             Ajax.call([{
                 methodname: 'local_saipa_index_course',
-                args: { course_id: courseId }
+                args: {course_id: courseId}
             }])[0].then(function(result) {
                 status.textContent = '\u2713 ' + result.indexed_count + ' p\u00e1ginas, ' + result.chunk_count + ' fragmentos';
                 return result;
@@ -36,11 +41,11 @@ define(['core/ajax', 'core/log'], function(Ajax, Log) {
                 Log.error('SAIPA index error: ' + JSON.stringify(err));
                 status.textContent = '\u2717 Error al indexar';
             }).always(function() {
-                btn.disabled  = false;
+                btn.disabled = false;
                 btn.innerHTML = '&#128196; Indexar curso';
             });
         });
     }
 
-    return { init: init };
+    return {init: init};
 });

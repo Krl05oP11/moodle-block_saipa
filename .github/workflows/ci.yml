@@ -82,7 +82,7 @@ jobs:
 
       - name: Moodle PHPDoc Checker
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci phpdoc || true
+        run: moodle-plugin-ci phpdoc
 
       - name: Validating
         if: ${{ !cancelled() }}
@@ -94,7 +94,7 @@ jobs:
 
       - name: Grunt (AMD build)
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci grunt || true
+        run: moodle-plugin-ci grunt
 
       - name: PHPUnit tests
         if: ${{ !cancelled() }}

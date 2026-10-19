@@ -25,10 +25,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component  = 'block_saipa';
-$plugin->version    = 2026032401;
+$plugin->version    = 2026101900;
 $plugin->requires   = 2024042200;
 $plugin->maturity   = MATURITY_STABLE;
-$plugin->release    = '0.5.0';
+$plugin->release    = '0.5.1';
 // This block is a front-end for local_saipa: it calls its web services and
 // reads its per-course settings. Installing the block pulls local_saipa in.
 $plugin->dependencies = [

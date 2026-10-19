@@ -5,4 +5,3 @@
 Thumbs.db
 /vendor/
 /node_modules/
-amd/build/*.map

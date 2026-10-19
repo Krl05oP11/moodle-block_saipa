@@ -4,6 +4,18 @@ All notable changes to the SAIPA Assistant block are documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+- **JavaScript now passes Moodle's ESLint and `amd/build` is a real grunt
+  build.** The CI ran `moodle-plugin-ci grunt` with `|| true`, which hid 11
+  ESLint errors (missing JSDoc, an inner function declaration in `chat.js`,
+  unused `init()` parameters in `telegram.js`/`whatsapp.js`, empty `@package`
+  tags). Fixed without behaviour changes; stylistic warnings auto-fixed where
+  the fix is clean. `amd/build/*.min.js` (and now their source maps) are
+  built with Moodle 4.4's grunt instead of being copies of `amd/src`. The CI
+  no longer ignores `phpdoc` or `grunt` failures.
+  Verified live: chat history, sending a message, and the feedback buttons
+  work with no console errors.
+
 ### Changed
 - **`pt_br` i18n completed — was 60% missing (14 of 35 keys).** The entire
   Telegram panel (8 keys) and WhatsApp panel (13 keys) were silently falling

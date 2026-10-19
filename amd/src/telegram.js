@@ -15,7 +15,6 @@
  *  - "Unlink" button → call local_saipa_telegram_unlink → reload
  *
  * @module     block_saipa/telegram
- * @package    block_saipa
  * @copyright  2026 Schaller & Ponce <dev@schaller-ponce.com.ar>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,12 +25,13 @@ define(['core/ajax', 'core/str', 'core/notification'], function(Ajax, Str, Notif
     var POLL_INTERVAL_MS = 3000;
 
     /**
-     * @param {number} courseId
-     * @param {boolean} alreadyLinked  — passed from the template server-side render
+     * Wire up the Telegram link and unlink buttons for the block in the given course.
+     *
+     * @param {number} courseId Course id used to locate the buttons and generate the deep link.
      */
-    function init(courseId, alreadyLinked) {
+    function init(courseId) {
 
-        var linkBtn   = document.getElementById('saipa-tg-link-btn-' + courseId);
+        var linkBtn = document.getElementById('saipa-tg-link-btn-' + courseId);
         var unlinkBtn = document.getElementById('saipa-tg-unlink-btn-' + courseId);
         var statusDiv = document.getElementById('saipa-tg-status-' + courseId);
 

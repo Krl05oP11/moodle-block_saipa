@@ -16,7 +16,6 @@
  *  Unlink — local_saipa_whatsapp_unlink → reload
  *
  * @module     block_saipa/whatsapp
- * @package    block_saipa
  * @copyright  2026 Schaller & Ponce <dev@schaller-ponce.com.ar>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -24,17 +23,22 @@ define(['core/ajax', 'core/str', 'core/notification'], function(Ajax, Str, Notif
 
     'use strict';
 
-    function init(courseId, alreadyVerified) {
+    /**
+     * Wire up the WhatsApp phone verification (send code, confirm OTP) and unlink controls for the given course.
+     *
+     * @param {number} courseId Course id used to locate the widget elements.
+     */
+    function init(courseId) {
 
-        var sendBtn    = document.getElementById('saipa-wa-send-btn-'    + courseId);
+        var sendBtn = document.getElementById('saipa-wa-send-btn-' + courseId);
         var confirmBtn = document.getElementById('saipa-wa-confirm-btn-' + courseId);
-        var unlinkBtn  = document.getElementById('saipa-wa-unlink-btn-'  + courseId);
-        var phoneInput = document.getElementById('saipa-wa-phone-'       + courseId);
-        var otpInput   = document.getElementById('saipa-wa-otp-'         + courseId);
-        var step1Div   = document.getElementById('saipa-wa-step1-'       + courseId);
-        var step2Div   = document.getElementById('saipa-wa-step2-'       + courseId);
-        var step1Msg   = document.getElementById('saipa-wa-step1-msg-'   + courseId);
-        var step2Msg   = document.getElementById('saipa-wa-step2-'       + courseId + '-msg-' + courseId);
+        var unlinkBtn = document.getElementById('saipa-wa-unlink-btn-' + courseId);
+        var phoneInput = document.getElementById('saipa-wa-phone-' + courseId);
+        var otpInput = document.getElementById('saipa-wa-otp-' + courseId);
+        var step1Div = document.getElementById('saipa-wa-step1-' + courseId);
+        var step2Div = document.getElementById('saipa-wa-step2-' + courseId);
+        var step1Msg = document.getElementById('saipa-wa-step1-msg-' + courseId);
+        var step2Msg = document.getElementById('saipa-wa-step2-' + courseId + '-msg-' + courseId);
 
         // Re-query step2 message div with the correct id pattern.
         step2Msg = document.getElementById('saipa-wa-step2-msg-' + courseId);

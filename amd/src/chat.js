@@ -12,14 +12,23 @@ define(['core/ajax', 'core/log', 'core/str'], function(Ajax, Log, Str) {
 
     'use strict';
 
+    /**
+     * Append a chat bubble to the container, adding feedback buttons for assistant messages, and scroll to the bottom.
+     *
+     * @param {string} role Message author role ('user' or 'assistant').
+     * @param {string} text Message text, rendered as plain text.
+     * @param {HTMLElement} container Element that holds the chat messages.
+     * @param {number} messageId Message id used for feedback; 0 disables the feedback buttons.
+     * @param {number} courseId Course id sent with the feedback request.
+     */
     function appendMessage(role, text, container, messageId, courseId) {
         var div = document.createElement('div');
         div.className = 'saipa-msg saipa-msg-' + role + ' mb-1 p-1 rounded';
-        div.style.background  = (role === 'user') ? '#d1ecf1' : '#fff3cd';
-        div.style.maxWidth    = '90%';
-        div.style.marginLeft  = (role === 'user') ? 'auto' : '0';
-        div.style.wordBreak   = 'break-word';
-        div.style.whiteSpace  = 'pre-wrap';
+        div.style.background = (role === 'user') ? '#d1ecf1' : '#fff3cd';
+        div.style.maxWidth = '90%';
+        div.style.marginLeft = (role === 'user') ? 'auto' : '0';
+        div.style.wordBreak = 'break-word';
+        div.style.whiteSpace = 'pre-wrap';
         div.textContent = text;
         container.appendChild(div);
 
@@ -36,32 +45,39 @@ define(['core/ajax', 'core/log', 'core/str'], function(Ajax, Log, Str) {
                 {key: 'chat_feedback_useful', component: 'block_saipa'},
                 {key: 'chat_feedback_not_useful', component: 'block_saipa'},
             ]).then(function(strings) {
-                fb.querySelector('.saipa-fb-up').title   = strings[0];
+                fb.querySelector('.saipa-fb-up').title = strings[0];
                 fb.querySelector('.saipa-fb-down').title = strings[1];
                 return strings;
             }).catch(function(err) {
                 Log.error('SAIPA feedback strings error: ' + JSON.stringify(err));
             });
 
-            function sendFeedback(rating, upBtn, downBtn) {
-                upBtn.disabled   = true;
+            /**
+             * Send the user's rating for this message and update the feedback buttons.
+             *
+             * @param {number} rating 1 for useful, -1 for not useful.
+             * @param {HTMLButtonElement} upBtn The thumbs-up button.
+             * @param {HTMLButtonElement} downBtn The thumbs-down button.
+             */
+            var sendFeedback = function(rating, upBtn, downBtn) {
+                upBtn.disabled = true;
                 downBtn.disabled = true;
                 Ajax.call([{
                     methodname: 'local_saipa_save_feedback',
-                    args: { course_id: courseId, message_id: messageId, rating: rating }
+                    args: {course_id: courseId, message_id: messageId, rating: rating}
                 }])[0].then(function() {
                     if (rating === 1) { upBtn.style.opacity = '1'; downBtn.style.opacity = '0.3'; }
-                    else              { downBtn.style.opacity = '1'; upBtn.style.opacity = '0.3'; }
+                    else { downBtn.style.opacity = '1'; upBtn.style.opacity = '0.3'; }
                 }).fail(function(err) {
                     Log.error('SAIPA feedback error: ' + JSON.stringify(err));
-                    upBtn.disabled   = false;
+                    upBtn.disabled = false;
                     downBtn.disabled = false;
                 });
-            }
+            };
 
-            var upBtn   = fb.querySelector('.saipa-fb-up');
+            var upBtn = fb.querySelector('.saipa-fb-up');
             var downBtn = fb.querySelector('.saipa-fb-down');
-            upBtn.addEventListener('click',   function() { sendFeedback(1,  upBtn, downBtn); });
+            upBtn.addEventListener('click', function() { sendFeedback(1, upBtn, downBtn); });
             downBtn.addEventListener('click', function() { sendFeedback(-1, upBtn, downBtn); });
         }
 
@@ -75,9 +91,14 @@ define(['core/ajax', 'core/log', 'core/str'], function(Ajax, Log, Str) {
         return msg;
     }).catch(function() {});
 
+    /**
+     * Initialise the chat widget for a course: load the history and wire up the send button and Enter key.
+     *
+     * @param {number} courseId Course id used to locate the widget elements and scope the web service calls.
+     */
     function init(courseId) {
-        var sendBtn      = document.getElementById('saipa-send-' + courseId);
-        var inputEl      = document.getElementById('saipa-input-' + courseId);
+        var sendBtn = document.getElementById('saipa-send-' + courseId);
+        var inputEl = document.getElementById('saipa-input-' + courseId);
         var msgContainer = document.getElementById('saipa-messages-' + courseId);
 
         if (!sendBtn || !inputEl || !msgContainer) {
@@ -90,7 +111,7 @@ define(['core/ajax', 'core/log', 'core/str'], function(Ajax, Log, Str) {
         // Load conversation history on init.
         Ajax.call([{
             methodname: 'local_saipa_get_history',
-            args: { course_id: courseId }
+            args: {course_id: courseId}
         }])[0].then(function(result) {
             sessionId = result.session_id || 0;
 
@@ -105,6 +126,9 @@ define(['core/ajax', 'core/log', 'core/str'], function(Ajax, Log, Str) {
             Log.error('SAIPA get_history error: ' + JSON.stringify(err));
         });
 
+        /**
+         * Send the current input to the SAIPA chat service and render the user message and the reply.
+         */
         function sendMessage() {
             var text = inputEl.value.trim();
             if (!text) {
@@ -117,7 +141,7 @@ define(['core/ajax', 'core/log', 'core/str'], function(Ajax, Log, Str) {
                 msgContainer.innerHTML = '';
             }
 
-            inputEl.value    = '';
+            inputEl.value = '';
             inputEl.disabled = true;
             sendBtn.disabled = true;
 
@@ -125,11 +149,11 @@ define(['core/ajax', 'core/log', 'core/str'], function(Ajax, Log, Str) {
 
             // Typing indicator.
             var typingDiv = document.createElement('div');
-            typingDiv.id              = 'saipa-typing-' + courseId;
-            typingDiv.className       = 'saipa-msg saipa-msg-assistant mb-1 p-1 rounded';
-            typingDiv.style.background  = '#fff3cd';
-            typingDiv.style.maxWidth    = '90%';
-            typingDiv.style.fontStyle   = 'italic';
+            typingDiv.id = 'saipa-typing-' + courseId;
+            typingDiv.className = 'saipa-msg saipa-msg-assistant mb-1 p-1 rounded';
+            typingDiv.style.background = '#fff3cd';
+            typingDiv.style.maxWidth = '90%';
+            typingDiv.style.fontStyle = 'italic';
             typingDiv.textContent = '...';
             msgContainer.appendChild(typingDiv);
             msgContainer.scrollTop = msgContainer.scrollHeight;
@@ -171,5 +195,5 @@ define(['core/ajax', 'core/log', 'core/str'], function(Ajax, Log, Str) {
         Log.debug('SAIPA: chat widget initialised for course ' + courseId);
     }
 
-    return { init: init };
+    return {init: init};
 });
