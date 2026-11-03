@@ -4,6 +4,13 @@ All notable changes to the SAIPA Assistant block are documented in this file.
 
 ## [Unreleased]
 
+### Marketplace review MMR-462 follow-up (0.5.3, 2026-11-02)
+- The Telegram and WhatsApp panels send the course id, so local_saipa checks
+  `local/saipa:chat` in this course; a refused WhatsApp code shows the reason.
+  Requires local_saipa 0.5.7.
+- GPL boilerplate in the template and the AMD source.
+- Moodle 5.0 jobs in the CI.
+
 ### Changed
 - **The "Index course" button status texts come from the language packs**
   (they were hardcoded Spanish). 3 new keys in `en`/`es`/`pt_br`.
