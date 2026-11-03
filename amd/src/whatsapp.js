@@ -73,7 +73,7 @@ define(['core/ajax', 'core/str', 'core/notification'], function(Ajax, Str, Notif
 
             Ajax.call([{
                 methodname: 'local_saipa_whatsapp_start_verify',
-                args: {phone: phone},
+                args: {phone: phone, course_id: courseId},
                 done: function(result) {
                     if (result.sent) {
                         // Show OTP step.
@@ -84,6 +84,11 @@ define(['core/ajax', 'core/str', 'core/notification'], function(Ajax, Str, Notif
                         }).catch(function() {});
                     } else {
                         sendBtn.disabled = false;
+                        if (result.detail) {
+                            // The server explains why (too many codes requested, engine not configured).
+                            if (step1Msg) { step1Msg.textContent = result.detail; }
+                            return;
+                        }
                         Str.get_string('whatsapp_send_error', 'block_saipa').then(function(msg) {
                             if (step1Msg) { step1Msg.textContent = msg; }
                         }).catch(function() {});
@@ -120,7 +125,7 @@ define(['core/ajax', 'core/str', 'core/notification'], function(Ajax, Str, Notif
 
             Ajax.call([{
                 methodname: 'local_saipa_whatsapp_confirm_otp',
-                args: {otp: otp},
+                args: {otp: otp, course_id: courseId},
                 done: function(result) {
                     if (result.success) {
                         window.location.reload();

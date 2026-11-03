@@ -85,7 +85,7 @@ define(['core/ajax', 'core/str', 'core/notification'], function(Ajax, Str, Notif
                     var pollHandle = setInterval(function() {
                         Ajax.call([{
                             methodname: 'local_saipa_telegram_get_status',
-                            args: {},
+                            args: {course_id: courseId},
                             done: function(status) {
                                 if (status.linked) {
                                     clearInterval(pollHandle);
