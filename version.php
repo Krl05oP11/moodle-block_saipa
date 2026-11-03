@@ -29,7 +29,7 @@ $plugin->version    = 2026110200;
 $plugin->requires   = 2024042200;
 $plugin->maturity   = MATURITY_STABLE;
 $plugin->release    = '0.5.3';
-$plugin->supported  = [404, 405];
+$plugin->supported  = [404, 503];
 // This block is a front-end for local_saipa: it calls its web services and
 // reads its per-course settings. Installing the block pulls local_saipa in.
 $plugin->dependencies = [

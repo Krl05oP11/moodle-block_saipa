@@ -9,7 +9,8 @@ All notable changes to the SAIPA Assistant block are documented in this file.
   `local/saipa:chat` in this course; a refused WhatsApp code shows the reason.
   Requires local_saipa 0.5.7.
 - GPL boilerplate in the template and the AMD source.
-- Moodle 5.0 jobs in the CI.
+- Supports Moodle 4.4 to 5.3 (`$plugin->supported = [404, 503]`). The CI runs
+  every branch from 4.4 to 5.3, each with its minimum PostgreSQL.
 
 ### Changed
 - **The "Index course" button status texts come from the language packs**
